@@ -30,6 +30,14 @@ def forum(request):
 
     return render(request, 'forum.html', context)
 
+def progress(request):
+    return render(request, 'progress.html')
+
+def assignments(request):
+    return render(request, 'assignments.html')
+
+
+
 
 class SnippetListInstance(generics.ListCreateAPIView):
     queryset= Snippet.objects.all()

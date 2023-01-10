@@ -34,6 +34,7 @@ class Student(models.Model):
     owner = models.ForeignKey('auth.User', related_name='progress', on_delete=models.CASCADE) # new
     email = models.EmailField()
     church = models.CharField(max_length=100, blank=True, default='')
+    post = models.TextField(max_length=100, blank=True, default='')
 
 
 

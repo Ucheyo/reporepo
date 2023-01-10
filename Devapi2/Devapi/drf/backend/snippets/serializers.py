@@ -43,7 +43,7 @@ class StudentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Student
-        fields = ('id', 'courseID', 'classesAttended', 'owner', 'email', 'church')
+        fields = ('id', 'courseID', 'classesAttended', 'owner', 'email', 'church', 'post')
 
     def validate_email(self, value):
         query_set = Snippet.objects.filter(email__exact=value)

@@ -17,14 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include, path
 
-from snippets.views import frontpage, forum
+from snippets.views import frontpage, forum, progress, assignments
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('', include('snippets.urls')),
     path('', frontpage, name='frontpage'),
-    path('forum/', forum, name='forum')
+    path('forum/', forum, name='forum'),
+    path('progress/', progress, name='progress'),
+    path('assignments/', assignments, name='assignments')
+
 
     
 ]
