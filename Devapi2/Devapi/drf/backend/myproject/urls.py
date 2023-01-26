@@ -16,9 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include, path
+from django.contrib.auth import views # built in views for login and logiut
 
-from snippets.views import frontpage, forum, progress, assignments
-
+from snippets.views import frontpage, forum, progress, assignments, studentSignup
+from userprofile.views import signup
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
@@ -26,7 +27,14 @@ urlpatterns = [
     path('', frontpage, name='frontpage'),
     path('forum/', forum, name='forum'),
     path('progress/', progress, name='progress'),
-    path('assignments/', assignments, name='assignments')
+    path('assignments/', assignments, name='assignments'),
+
+    #Auth
+    
+    path('signup/', studentSignup, name='studentSignup'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('login/', views.LoginView.as_view(template_name='login.html'), name='login')
+
 
 
     

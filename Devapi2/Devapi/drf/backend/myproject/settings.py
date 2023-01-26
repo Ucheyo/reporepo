@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'progress'
+LOGOUT_REDIRECT_URL = 'frontpage'
 
 # Application definition
 
@@ -39,7 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'snippets',
+    'userprofile',
     'drf_multiple_model',
+    'students',
 ]
 
 MIDDLEWARE = [
