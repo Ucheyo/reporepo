@@ -2,11 +2,11 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 
-from .forms import StudentForm
+from .forms import SignUpForm
 
 def signup(request):
     if request.method =='POST':
-        form = StudentForm(request.POST)
+        form = SignUpForm(request.POST)
 
         if form.is_valid():
             newStudent = form.save()
@@ -15,6 +15,6 @@ def signup(request):
 
             return redirect('frontpage')
     else:
-        form = StudentForm()
+        form = SignUpForm()
     
     return render(request, 'signup.html', {'form': form})

@@ -6,16 +6,7 @@
     <form method="post" action=".">
         {% csrf_token %}
 
-        <p>Name</p>
-        <input type="text" name="name" placeholder="Enter Username" required="">
-        <p>Email</p>
-        <input type="email" name="email" placeholder="Enter Email" required="">
-
-        <p>Password</p>
-        <input type="password" name="password" placeholder="Enter Password" required="">
-
-        <p>Church</p>
-        <input type="text" name="church" placeholder="Enter Church" required="">
+        {{form.as_p}}
 
         <div class="field">
             <div class="control">
