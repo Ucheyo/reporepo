@@ -27,9 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'progress'
-LOGOUT_REDIRECT_URL = 'frontpage'
+# LOGIN_URL = 'login'
+# LOGIN_REDIRECT_URL = 'progress'
+# LOGOUT_REDIRECT_URL = 'frontpage'
 
 # Application definition
 
@@ -41,12 +41,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'snippets',
     'userprofile',
     'drf_multiple_model',
     'students',
+    'forum',
+    'assignments'
 ]
 
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -136,4 +150,12 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': '10',
     'DATETIME_FORMAT': "%m/%d/%Y",
     #'DATETIME_FORMAT': "%YYYY-%MM-%DD"
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
 }

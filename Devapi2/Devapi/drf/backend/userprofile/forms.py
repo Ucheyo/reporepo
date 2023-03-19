@@ -6,6 +6,7 @@ from students.models import Student
 from snippets.serializers import StudentSerializer
 from django.forms import ModelForm
 
+
 class SignUpForm(UserCreationForm):
     name = forms.CharField(max_length=50, required=True)
     church = forms.CharField(max_length=50, required=True)
@@ -13,4 +14,4 @@ class SignUpForm(UserCreationForm):
    
     class Meta:
         model = User
-        fields = ['name', 'email', 'church', 'password1', 'password2']
+        fields = ['username', 'name', 'email', 'church', 'password1', 'password2']
