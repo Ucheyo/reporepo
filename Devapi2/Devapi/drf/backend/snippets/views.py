@@ -25,51 +25,77 @@ from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.views import APIView
 
-class StudentViewset(viewsets.ModelViewSet):
+#class StudentViewset(viewsets.ModelViewSet):
 
-    permission_classes = (IsAuthenticated,)
-    serializer_class = StudentSerializer
-    queryset = Student.objects.all()
+#modified here
+#     permission_classes = (IsAuthenticated,)
+#     serializer_class = StudentSerializer
+#     queryset = Student.objects.all()
 
-class ForumViewset(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = ForumSerializer
-    queryset = Forum.objects.all()
-
-
-class AssignmentsViewset(viewsets.ModelViewSet):
-    permission_classes = (IsAuthenticated,)
-    serializer_class = AssignmentSerializer
-    queryset = Assignment.objects.all()    
+# class ForumViewset(viewsets.ModelViewSet):
+#     permission_classes = (IsAuthenticated,)
+#     serializer_class = ForumSerializer
+#     queryset = Forum.objects.all()
 
 
+# class AssignmentsViewset(viewsets.ModelViewSet):
+#     permission_classes = (IsAuthenticated,)
+#     serializer_class = AssignmentSerializer
+#     queryset = Assignment.objects.all()    
+#modified herre
 
 
 
-# @api_view(['GET']) # new
-# def api_root(request, format=None):
-#     return Response({
-#         'users': reverse('user-list', request=request, format=format),
-#         'snippets': reverse('snippet-list', request=request, format=format)
-#     })
 
-# def frontpage(request):
-#     return render(request, 'frontpage.html')
+@api_view(['GET','POST']) # new
+def api_root(request, format=None):
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'snippets': reverse('snippet-list', request=request, format=format)
+    })
 
-# def forum(request):
-#     students= Student.objects.all()
+def frontpage(request):
+    return render(request, 'frontpage.html')
 
-#     context = {
-#         'students': students
-#     }
+def forum(request):
+    students= Student.objects.all()
 
-#     return render(request, 'forum.html', context)
+    context = {
+        'students': students
+    }
 
-# def progress(request):
-#     return render(request, 'progress.html')
+    return render(request, 'forum.html', context)
 
-# def assignments(request):
-#     return render(request, 'assignments.html')
+def progress(request):
+    return render(request, 'progress.html')
+
+def assignments(request):
+    return render(request, 'assignments.html')
+
+def studentSignup(request, format=None):
+    
+    if request.method =='POST':
+
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.student.church = form.cleaned_data.get('church')
+            user.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+
+            username = authenticate(username=username, password=password)
+            login(request,user)
+
+            return redirect('frontpage')
+
+            
+    else:
+        form = SignUpForm()
+    
+    return render(request, 'signup.html', {'form': form})
+
 
 
 # @api_view(['GET', 'POST'])
@@ -91,25 +117,7 @@ class AssignmentsViewset(viewsets.ModelViewSet):
 
 
 
-# @api_view(['GET', 'POST'])
-# def studentSignup(request, format=None):
-    
-#     if request.method =='POST':
-
-#         form = SignUpForm(request.POST)
-
-#         if form.is_valid():
-#             newStudent = form.save()
-
-#             login(request,newStudent)
-
-#             return redirect('frontpage')
-
-            
-#     else:
-#         form = SignUpForm()
-    
-#     return render(request, 'signup.html', {'form': form})
+#@api_view(['GET', 'POST'])
 
 
 

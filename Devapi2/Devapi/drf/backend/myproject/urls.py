@@ -16,45 +16,45 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.urls import include, path
-#from django.contrib.auth import views # built in views for login and logiut
+from django.contrib.auth import views # built in views for login and logiut
 
 from rest_framework.routers import DefaultRouter
-#from snippets.views import frontpage, forum, progress, assignments  #studentSignup
-from snippets.views import StudentViewset, ForumViewset, AssignmentsViewset
+from snippets.views import frontpage, forum, progress, assignments, studentSignup
+#from snippets.views import StudentViewset, ForumViewset, AssignmentsViewset
 from userprofile.views import signup
 
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
+# from rest_framework_simplejwt.views import (
+#     TokenObtainPairView,
+#     TokenRefreshView,
+# )
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
 #    path('', include('snippets.urls')),
-#    path('', frontpage, name='frontpage'),
-#    path('forum/', forum, name='forum'),
-#    path('progress/', progress, name='progress'),
-#    path('assignments/', assignments, name='assignments'),
+    path('', frontpage, name='frontpage'),
+    path('forum/', forum, name='forum'),
+    path('progress/', progress, name='progress'),
+    path('assignments/', assignments, name='assignments'),
 
     #Auth
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+#    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+#    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
 
 
-    # path('signup/', studentSignup, name='studentSignup'),
-    # path('logout/', views.LogoutView.as_view(), name='logout'),
-    # path('login/', views.LoginView.as_view(template_name='login.html'), name='login')
+    path('signup/', studentSignup, name='studentSignup'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('login/', views.LoginView.as_view(template_name='login.html'), name='login')
 
 ]
 
-
-router = DefaultRouter()
-router.register("student", StudentViewset, basename="student")
-router.register("forum", ForumViewset, basename="forum")
-router.register("assignments", AssignmentsViewset, basename="assignments")
-urlpatterns += router.urls
-    
+#modified here
+# router = DefaultRouter()
+# router.register("student", StudentViewset, basename="student")
+# router.register("forum", ForumViewset, basename="forum")
+# router.register("assignments", AssignmentsViewset, basename="assignments")
+# urlpatterns += router.urls
+#modified here    
 
