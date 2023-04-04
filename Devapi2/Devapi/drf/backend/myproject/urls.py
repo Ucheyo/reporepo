@@ -19,7 +19,7 @@ from django.urls import include, path
 from django.contrib.auth import views # built in views for login and logiut
 
 from rest_framework.routers import DefaultRouter
-from snippets.views import frontpage, forum, progress, assignments, studentSignup
+from snippets.views import frontpage, forum, progress, assignments
 #from snippets.views import StudentViewset, ForumViewset, AssignmentsViewset
 from userprofile.views import signup
 
@@ -31,7 +31,7 @@ from userprofile.views import signup
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
+#    path('api-auth/', include('rest_framework.urls')),
 #    path('', include('snippets.urls')),
     path('', frontpage, name='frontpage'),
     path('forum/', forum, name='forum'),
@@ -42,9 +42,7 @@ urlpatterns = [
 #    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 #    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 
-
-
-    path('signup/', studentSignup, name='studentSignup'),
+    path('signup/', signup, name='signup'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
     path('login/', views.LoginView.as_view(template_name='login.html'), name='login')
 

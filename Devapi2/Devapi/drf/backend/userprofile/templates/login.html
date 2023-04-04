@@ -2,18 +2,10 @@
 
 {% block content %}
     <h1 class="title">Log in</h1>
-
     <form method="post" action=".">
         {% csrf_token %}
 
-
-        <p>Email</p>
-        <input type="email" name="email" placeholder="Enter Email" required="">
-
-        <p>Password</p>
-        <input type="password" name="password" placeholder="Enter Password" required="">
-
-
+        {{form.as_p}} 
 
         <div class="field">
             <div class="control">

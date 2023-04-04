@@ -8,11 +8,12 @@ from django.forms import ModelForm
 
 
 class SignUpForm(UserCreationForm):
-    username = forms.CharField(max_length=50, required=True)
+    first_name = forms.CharField(max_length=50, required=True)
     church = forms.CharField(max_length=50, required=True)
+    last_name = forms.CharField(max_length=50, required=True)    
     email = forms.EmailField(max_length=50, required=True)
 
    
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username','first_name', 'last_name','email', 'password1', 'password2']

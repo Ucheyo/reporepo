@@ -47,21 +47,21 @@ from rest_framework.views import APIView
 
 
 
-@api_view(['GET','POST']) # new
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'snippets': reverse('snippet-list', request=request, format=format)
-    })
+# @api_view(['GET','POST']) # new
+# def api_root(request, format=None):
+#     return Response({
+#         'users': reverse('user-list', request=request, format=format),
+#         #'snippets': reverse('snippet-list', request=request, format=format)
+#     })
 
+@api_view(['GET','POST']) # new
 def frontpage(request):
     return render(request, 'frontpage.html')
-
 def forum(request):
     students= Student.objects.all()
 
     context = {
-        'students': students
+         'students': students
     }
 
     return render(request, 'forum.html', context)
@@ -72,29 +72,29 @@ def progress(request):
 def assignments(request):
     return render(request, 'assignments.html')
 
-def studentSignup(request, format=None):
+# def studentSignup(request, format=None):
     
-    if request.method =='POST':
+#     if request.method =='POST':
 
-        form = SignUpForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()
-            user.student.church = form.cleaned_data.get('church')
-            user.save()
-            username = form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
+#         form = SignUpForm(request.POST)
+#         if form.is_valid():
+#             user = form.save()
+#             user.refresh_from_db()
+#             user.student.church = form.cleaned_data.get('church')
+#             user.save()
+#             username = form.cleaned_data.get('username')
+#             password = form.cleaned_data.get('password1')
 
-            username = authenticate(username=username, password=password)
-            login(request,user)
+#             username = authenticate(username=username, password=password)
+#             login(request,user)
 
-            return redirect('frontpage')
+#             return redirect('frontpage')
 
             
-    else:
-        form = SignUpForm()
+#     else:
+#         form = SignUpForm()
     
-    return render(request, 'signup.html', {'form': form})
+#     return render(request, 'signup.html', {'form': form})
 
 
 
