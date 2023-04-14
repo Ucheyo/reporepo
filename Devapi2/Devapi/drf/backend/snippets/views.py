@@ -12,12 +12,11 @@ from rest_framework import status
 from rest_framework import generics, permissions
 from .models import Snippet
 from students.models import Student
-from forum.models import Forum
 from assignments.models import Assignment
 from django.contrib.auth.models import User
 from .serializers import StudentSerializer, ForumSerializer, AssignmentSerializer
 from .permissions import UserIsOwner
-from userprofile.forms import SignUpForm
+from userprofile.forms import classChoices
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
@@ -54,23 +53,77 @@ from rest_framework.views import APIView
 #         #'snippets': reverse('snippet-list', request=request, format=format)
 #     })
 
-@api_view(['GET','POST']) # new
 def frontpage(request):
-    return render(request, 'frontpage.html')
+
+    if request.user.is_authenticated:
+        context = {}
+
+        students= Student.objects.all()
+        id = request.user.id
+        myStudent = Student.objects.get(id=id)    
+        context['students']= students
+        context['currentStudent']= myStudent         
+        return render(request, 'frontpage.html', context)
+    else:
+        return render(request, 'frontpage.html')
+
+
 def forum(request):
     students= Student.objects.all()
-
+    id = request.user.id
+    myStudent = Student.objects.get(id=id)    
     context = {
-         'students': students
+         'students': students,
+         'currentStudent': myStudent         
     }
 
     return render(request, 'forum.html', context)
 
+@api_view(['GET','POST']) # new
 def progress(request):
-    return render(request, 'progress.html')
+    current_user = request.user
+    id = current_user.id
+    myStudent = Student.objects.get(id=id)
+    students= Student.objects.all()
+    context = {}
+    
+    if request.method =='POST':
+
+        form = classChoices(request.POST, instance=myStudent)
+        if form.is_valid():
+
+            form.save()
+            context['form'] = form
+
+                
+            return redirect('frontpage')
+
+        
+                
+    else:    
+        form = classChoices()
+        # context = {
+        #     'students': students
+        # }
+        context['students'] = students
+        context['currentStudent'] = myStudent
+        context['form'] = form
+        
+        
+    return render(request, 'progress.html',context)
+
 
 def assignments(request):
-    return render(request, 'assignments.html')
+    students= Student.objects.all()
+    id = request.user.id
+    myStudent = Student.objects.get(id=id)    
+    context = {
+         'students': students,
+         'currentStudent': myStudent         
+    }
+
+    return render(request, 'assignments.html', context)
+    #return render(request, 'assignments.html')
 
 # def studentSignup(request, format=None):
     

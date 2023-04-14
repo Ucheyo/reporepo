@@ -17,3 +17,8 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['username','first_name', 'last_name','email', 'password1', 'password2']
+
+class classChoices(ModelForm):
+    class Meta:
+        model = Student
+        fields = ["foundation_class_choices"]

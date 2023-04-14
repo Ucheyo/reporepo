@@ -2,4 +2,22 @@
 
 {% block content %}
     <h1 class ="title">The progress</h1>
+    {% if request.user.is_authenticated %}
+    {% csrf_token %}
+        <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
+        <p>Please fill in what class you are in</p>
+        <form method="post">
+
+            {% csrf_token %}
+    
+            {{ form.as_p }}
+    
+            <button class="button is-success is-fullwidth is-medium mt-5"
+    
+                    type="submit">Submit
+    
+            </button>
+    
+        </form>
+    {% endif %}
 {% endblock %}
