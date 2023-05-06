@@ -19,7 +19,7 @@ from django.urls import include, path
 from django.contrib.auth import views # built in views for login and logiut
 
 from rest_framework.routers import DefaultRouter
-from snippets.views import frontpage, forum, progress, assignments
+from snippets.views import frontpage, forum, progress, assignments, forumDetail, createNewForum, comments
 #from snippets.views import StudentViewset, ForumViewset, AssignmentsViewset
 from userprofile.views import signup
 
@@ -37,7 +37,9 @@ urlpatterns = [
     path('forum/', forum, name='forum'),
     path('progress/', progress, name='progress'),
     path('assignments/', assignments, name='assignments'),
-
+    path('forum-detail/forums/<int:forum_id>/', forumDetail, name='forum-detail'),
+    path('new-forum/', createNewForum, name='create-forum'),
+    path('new-comment/<int:forum_id>/<int:comment_id>',comments,name='new-comment'),
     #Auth
 #    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 #    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

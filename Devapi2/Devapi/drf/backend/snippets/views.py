@@ -13,13 +13,16 @@ from rest_framework import generics, permissions
 from .models import Snippet
 from students.models import Student
 from assignments.models import Assignment
+from forum.models import Forum
+from comments.models import Comment
 from django.contrib.auth.models import User
 from .serializers import StudentSerializer, ForumSerializer, AssignmentSerializer
 from .permissions import UserIsOwner
 from userprofile.forms import classChoices
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-
+from forum.forms import ForumCreationForm
+from comments.form import CommentCreationForm
 from django.shortcuts import get_object_or_404
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.views import APIView
@@ -69,15 +72,32 @@ def frontpage(request):
 
 
 def forum(request):
-    students= Student.objects.all()
     id = request.user.id
-    myStudent = Student.objects.get(id=id)    
+    myStudent = Student.objects.get(id=id)
+    forums = Forum.objects.all()
     context = {
-         'students': students,
-         'currentStudent': myStudent         
+         'currentStudent': myStudent,
+         'forums': forums
     }
 
     return render(request, 'forum.html', context)
+
+
+def forumDetail(request, forum_id):
+    forum = Forum.objects.get(id=forum_id)
+    #forum = Forum.students.get_object
+    myStudent = Student.objects.get(id=request.user.id)
+    myComment = Comment.objects.get(forumID=forum)    
+    context = {
+         'currentStudent': myStudent,
+         'forum': forum,
+         'comment': myComment
+    }
+
+    return render(request, 'forum-detail.html', context)
+
+
+
 
 @api_view(['GET','POST']) # new
 def progress(request):
@@ -123,8 +143,56 @@ def assignments(request):
     }
 
     return render(request, 'assignments.html', context)
-    #return render(request, 'assignments.html')
 
+@api_view(['GET','POST']) # new
+def createNewForum(request):
+    context = {}
+    id = request.user.id
+    myStudent = Student.objects.get(id=id)   
+    if request.method =='POST':
+        form = ForumCreationForm(request.POST )
+
+        if form.is_valid():
+        
+            #myForm = form.save(commit=False)
+            myForm = form.save(commit=False)
+            myForm.students = myStudent.user
+            myForm.save()
+            context['form'] = myForm
+        return redirect('forum')
+    else:
+        form = ForumCreationForm()
+        context['form'] = form 
+    return render(request, 'create-forum.html', context)
+
+
+@api_view(['GET','POST']) # new
+def comments(request, forum_id, comment_id):
+    context = {}
+    id = request.user.id
+    forum = Forum.objects.get(id=forum_id)
+    myStudent = Student.objects.get(id=id)
+    context= {'forum':form,
+                'student':myStudent
+                }
+   
+    myComment = Comment.objects.get(id=comment_id)    
+    if request.method =='POST':
+        form = CommentCreationForm(request.POST )
+
+        if form.is_valid():
+        
+            myForm = form.save(commit=False)
+            myForm.students = myStudent.user
+            myForm.forumID = forum
+            myForm.commentID = myComment.id
+            myForm.save()
+        return redirect('forum')
+    else:
+        form = CommentCreationForm()
+        context['form'] = form 
+    
+    return render(request, 'comments.html', {'form': form})
 # def studentSignup(request, format=None):
     
 #     if request.method =='POST':

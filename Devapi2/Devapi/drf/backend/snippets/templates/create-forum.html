@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="title">Create New Forum</h1>
+    <form method="post" action=".">
+        {% csrf_token %}
+
+       {{form.as_p}} 
+        {% comment %} {{form.as_div}} {% endcomment %}
+        {% comment %} {{ form.as_table }}  {% endcomment %}
+        {% comment %} {{ form.as_ul }} {% endcomment %}
+
+        <div class="field">
+            <div class="control">
+                <button class="button is-success">Add Forum</button>
+            </div>
+        </div>
+
+    </form>
+    
+
+{% endblock %}

@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'drf_multiple_model',
     'students',
     'forum',
-    'assignments'
+    'assignments',
+    'comments'
 ]
 
 # REST_FRAMEWORK = {
