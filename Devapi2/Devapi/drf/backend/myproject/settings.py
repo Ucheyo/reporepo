@@ -20,6 +20,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+MEDIA_ROOT="/home/bluewave/Documents"
+
+MEDIA_URL="/home/bluewave/Documents"
+
+
 SECRET_KEY = 'django-insecure-59^fz@8m5)#d!s_!e0+14k#8sh&dnw2ga^pqjcl)w_g%i0^dv)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -48,7 +53,8 @@ INSTALLED_APPS = [
     'students',
     'forum',
     'assignments',
-    'comments'
+    'comments',
+    'submissions'
 ]
 
 # REST_FRAMEWORK = {
@@ -62,6 +68,8 @@ INSTALLED_APPS = [
 #         'rest_framework_simplejwt.authentication.JWTAuthentication',
 #     )
 # }
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -70,6 +78,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_fileuploadvalidation.middleware.FileUploadValidationMiddleware',
 ]
 
 ROOT_URLCONF = 'myproject.urls'

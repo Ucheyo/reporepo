@@ -75,24 +75,35 @@ def forum(request):
     id = request.user.id
     myStudent = Student.objects.get(id=id)
     forums = Forum.objects.all()
+    comments = Comment.objects.all()
     context = {
          'currentStudent': myStudent,
-         'forums': forums
+         'forums': forums,
+         'comments': comments
     }
 
     return render(request, 'forum.html', context)
 
 
 def forumDetail(request, forum_id):
+    context = {}
     forum = Forum.objects.get(id=forum_id)
     #forum = Forum.students.get_object
-    myStudent = Student.objects.get(id=request.user.id)
-    myComment = Comment.objects.get(forumID=forum)    
+    myComments = Comment.objects.filter(forumID=forum_id)
+    commentIdListIntegers  = []  
+    testInt = [1,2,3,4,5]
+    # for i in range(comment_id_list):
+    #     commentIdListIntegers[i] = int(comment_id_list[i])
+
+    # for i in range(comment_id_list):    
+    #     comments = Comment.objects.get(forumID=forum, id=commentIdListIntegers[i])    
     context = {
-         'currentStudent': myStudent,
          'forum': forum,
-         'comment': myComment
+         'comment_list': myComments,
+         'tests': testInt
     }
+
+    
 
     return render(request, 'forum-detail.html', context)
 
@@ -172,11 +183,10 @@ def comments(request, forum_id, comment_id):
     id = request.user.id
     forum = Forum.objects.get(id=forum_id)
     myStudent = Student.objects.get(id=id)
-    context= {'forum':form,
+    context= {'forum':forum,
                 'student':myStudent
                 }
    
-    myComment = Comment.objects.get(id=comment_id)    
     if request.method =='POST':
         form = CommentCreationForm(request.POST )
 
@@ -185,7 +195,7 @@ def comments(request, forum_id, comment_id):
             myForm = form.save(commit=False)
             myForm.students = myStudent.user
             myForm.forumID = forum
-            myForm.commentID = myComment.id
+            myForm.commentID = Comment.objects.get(id=comment_id)
             myForm.save()
         return redirect('forum')
     else:

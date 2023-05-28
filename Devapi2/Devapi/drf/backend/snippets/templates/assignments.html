@@ -2,4 +2,7 @@
 
 {% block content %}
     <h1 class ="title">The Assignments</h1>
+
+    <h1>Download File using Django</h1>
+    <a href="{% url 'download_file' filename='test.txt' %}">Download PDF</a>
 {% endblock %}

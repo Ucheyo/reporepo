@@ -37,9 +37,10 @@ urlpatterns = [
     path('forum/', forum, name='forum'),
     path('progress/', progress, name='progress'),
     path('assignments/', assignments, name='assignments'),
-    path('forum-detail/forums/<int:forum_id>/', forumDetail, name='forum-detail'),
+    path('forum-detail/<int:forum_id>/', forumDetail, name='forum-detail'),
     path('new-forum/', createNewForum, name='create-forum'),
-    path('new-comment/<int:forum_id>/<int:comment_id>',comments,name='new-comment'),
+    path('new-comment/forum=<int:forum_id>-comment=<int:comment_id>/',comments,name='new-comment'),
+    path("upload_texts/", views.upload_texts),
     #Auth
 #    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 #    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

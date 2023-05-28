@@ -4,3 +4,4 @@ pyyaml
 requests
 django-cors-headers
 django-rest-multiple-models
+python-magic
